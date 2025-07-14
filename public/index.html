@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Upd8</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 30px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .form-control-cpf {
+            width: 150px;
+            display: inline-block;
+        }
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4 text-center">Sistema de Cadastro Upd8</h2>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="cliente-pane" role="tabpanel" aria-labelledby="cliente-tab" tabindex="0">
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        Cadastro Cliente
+                    </div>
+                    <div class="card-body">
+                        <form id="clienteForm">
+                            <input type="hidden" id="clienteId">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="cpf" class="form-label">CPF :</label>
+                                    <input type="text" class="form-control" id="cpf" placeholder="XXX.XXX.XXX-XX" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="nomeCliente" class="form-label">Nome :</label>
+                                    <input type="text" class="form-control" id="nomeCliente" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="dataNascimento" class="form-label">Data Nascimento:</label>
+                                    <input type="date" class="form-control" id="dataNascimento" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label d-block">Sexo:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="M" checked>
+                                        <label class="form-check-label" for="sexoMasculino">Masculino</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sexo" id="sexoFeminino" value="F">
+                                        <label class="form-check-label" for="sexoFeminino">Feminino</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="endereco" class="form-label">Endereço:</label>
+                                    <input type="text" class="form-control" id="endereco" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="estadoCliente" class="form-label">Estado:</label>
+                                    <select class="form-select" id="estadoCliente" required></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cidadeCliente" class="form-label">Cidade:</label>
+                                    <select class="form-select" id="cidadeCliente" required></select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                                <button type="button" class="btn btn-secondary" id="limparClienteForm">Limpar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                        Consulta Cliente
+                    </div>
+                    <div class="card-body">
+                        <form id="consultaClienteForm">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="searchCpf" class="form-label">CPF :</label>
+                                    <input type="text" class="form-control" id="searchCpf" placeholder="XXX.XXX.XXX-XX">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="searchNomeCliente" class="form-label">Nome :</label>
+                                    <input type="text" class="form-control" id="searchNomeCliente">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="searchDataNascimento" class="form-label">Data Nascimento:</label>
+                                    <input type="date" class="form-control" id="searchDataNascimento">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label d-block">Sexo:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="searchSexo" id="searchSexoMasculino" value="M">
+                                        <label class="form-check-label" for="searchSexoMasculino">Masculino</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="searchSexo" id="searchSexoFeminino" value="F">
+                                        <label class="form-check-label" for="searchSexoFeminino">Feminino</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="searchSexo" id="searchSexoTodos" value="" checked>
+                                        <label class="form-check-label" for="searchSexoTodos">Todos</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="searchEstadoCliente" class="form-label">Estado:</label>
+                                    <select class="form-select" id="searchEstadoCliente"></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="searchCidadeCliente" class="form-label">Cidade:</label>
+                                    <select class="form-select" id="searchCidadeCliente"></select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-2">Pesquisar</button>
+                                <button type="button" class="btn btn-secondary" id="limparConsultaClienteForm">Limpar</button>
+                            </div>
+                        </form>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ações</th>
+                                        <th>Cliente</th>
+                                        <th>CPF</th>
+                                        <th>Data Nasc.</th>
+                                        <th>Estado</th>
+                                        <th>Cidade</th>
+                                        <th>Sexo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientesTableBody">
+                                    </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation" class="pagination-container">
+                            <ul class="pagination" id="clientesPagination">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="cidade-pane" role="tabpanel" aria-labelledby="cidade-tab" tabindex="0">
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        Cadastro Cidade
+                    </div>
+                    <div class="card-body">
+                        <form id="cidadeForm">
+                            <input type="hidden" id="cidadeId">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="nomeCidade" class="form-label">Nome:</label>
+                                    <input type="text" class="form-control" id="nomeCidade" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="estadoCidade" class="form-label">Estado (UF):</label>
+                                    <input type="text" class="form-control" id="estadoCidade" maxlength="2" required>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                                <button type="button" class="btn btn-secondary" id="limparCidadeForm">Limpar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                        Consulta Cidade
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ações</th>
+                                        <th>Nome</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cidadesTableBody">
+                                    </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation" class="pagination-container">
+                            <ul class="pagination" id="cidadesPagination">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="representante-pane" role="tabpanel" aria-labelledby="representante-tab" tabindex="0">
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        Cadastro Representante
+                    </div>
+                    <div class="card-body">
+                        <form id="representanteForm">
+                            <input type="hidden" id="representanteId">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="nomeRepresentante" class="form-label">Nome:</label>
+                                    <input type="text" class="form-control" id="nomeRepresentante" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="emailRepresentante" class="form-label">Email:</label>
+                                    <input type="email" class="form-control" id="emailRepresentante" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="telefoneRepresentante" class="form-label">Telefone:</label>
+                                    <input type="text" class="form-control" id="telefoneRepresentante">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cidadeRepresentante" class="form-label">Cidade:</label>
+                                    <select class="form-select" id="cidadeRepresentante" required></select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                                <button type="button" class="btn btn-secondary" id="limparRepresentanteForm">Limpar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                        Consulta Representante
+                    </div>
+                    <div class="card-body">
+                        <form id="consultaRepresentanteForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="searchCidadeRepresentante" class="form-label">Cidade:</label>
+                                    <select class="form-select" id="searchCidadeRepresentante"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="searchNomeRepresentante" class="form-label">Nome:</label>
+                                    <input type="text" class="form-control" id="searchNomeRepresentante">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-2">Pesquisar</button>
+                                <button type="button" class="btn btn-secondary" id="limparConsultaRepresentanteForm">Limpar</button>
+                            </div>
+                        </form>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ações</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Cidade</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="representantesTableBody">
+                                    </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Page navigation" class="pagination-container">
+                            <ul class="pagination" id="representantesPagination">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="queries-pane" role="tabpanel" aria-labelledby="queries-tab" tabindex="0">
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        Consultar Representantes
+                    </div>
+                    <div class="card-body">
+                        <h5>Representantes por Cliente</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="queryClienteSelect" class="form-label">Selecione o Cliente:</label>
+                                <select class="form-select" id="queryClienteSelect"></select>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button type="button" class="btn btn-info" id="btnQueryRepresentantesByCliente">Consultar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nome Representante</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Cidade</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="queryRepresentantesByClienteTableBody">
+                                    </tbody>
+                            </table>
+                        </div>
+
+                        <h5 class="mt-4">Representantes por Cidade</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="queryCidadeSelect" class="form-label">Selecione a Cidade:</label>
+                                <select class="form-select" id="queryCidadeSelect"></select>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button type="button" class="btn btn-info" id="btnQueryRepresentantesByCidade">Consultar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive mt-3">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nome Representante</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Cidade</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="queryRepresentantesByCidadeTableBody">
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GExQ1jXQYpGqf8r+iVjE2K8" crossorigin="anonymous"></script>
+    <script>
+        const API_BASE_URL = window.location.origin + '/api';
+
+        // Funções utilitárias
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${day}/${month}/${year}`;
+        }
+
+        function formatCpf(cpf) {
+            if (!cpf) return '';
+            cpf = cpf.replace(/\D/g, ''); // Remove tudo que não é dígito
+            if (cpf.length <= 11) { // CPF
+                return cpf.replace(/(\d{3})(\d)/, '$1.$2')
+                        .replace(/(\d{3})(\d)/, '$1.$2')
+                        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            }
+            return cpf; // Retorna como está se não for CPF
+        }
+
+        async function fetchAPI(url, method = 'GET', data = null) {
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            };
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Erro na requisição da API.');
+                }
+                if (response.status === 204) return null; // No Content for DELETE
+                return await response.json();
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                alert('Erro: ' + error.message);
+                return null;
+            }
+        }
+
+        async function populateCidadeSelect(selectElement, includeAllOption = false) {
+            const cidades = await fetchAPI(`${API_BASE_URL}/cidades`);
+            selectElement.innerHTML = '';
+            if (includeAllOption) {
+                const optionAll = document.createElement('option');
+                optionAll.value = '';
+                optionAll.textContent = 'Todos';
+                selectElement.appendChild(optionAll);
+            }
+            if (cidades) {
+                cidades.forEach(cidade => {
+                    const option = document.createElement('option');
+                    option.value = cidade.id;
+                    option.textContent = `${cidade.nome} - ${cidade.estado}`;
+                    selectElement.appendChild(option);
+                });
+            }
+        }
+
+        async function populateEstadoSelect(selectElement, includeAllOption = false) {
+            const cidades = await fetchAPI(`${API_BASE_URL}/cidades`);
+            const estados = [...new Set(cidades.map(c => c.estado))].sort(); // Obter estados únicos e ordenar
+            selectElement.innerHTML = '';
+            if (includeAllOption) {
+                const optionAll = document.createElement('option');
+                optionAll.value = '';
+                optionAll.textContent = 'Todos';
+                selectElement.appendChild(optionAll);
+            }
+            estados.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado;
+                option.textContent = estado;
+                selectElement.appendChild(option);
+            });
+        }
+
+        // --- Gerenciamento de Clientes ---
+
+        const clienteForm = document.getElementById('clienteForm');
+        const limparClienteFormBtn = document.getElementById('limparClienteForm');
+        const consultaClienteForm = document.getElementById('consultaClienteForm');
+        const limparConsultaClienteFormBtn = document.getElementById('limparConsultaClienteForm');
+        const clientesTableBody = document.getElementById('clientesTableBody');
+        const clientesPagination = document.getElementById('clientesPagination');
+
+        async function loadClientes(page = 1) {
+            const params = new URLSearchParams();
+            const searchCpf = document.getElementById('searchCpf').value;
+            const searchNomeCliente = document.getElementById('searchNomeCliente').value;
+            const searchDataNascimento = document.getElementById('searchDataNascimento').value;
+            const searchSexo = document.querySelector('input[name="searchSexo"]:checked').value;
+            const searchEstadoCliente = document.getElementById('searchEstadoCliente').value;
+            const searchCidadeCliente = document.getElementById('searchCidadeCliente').value;
+
+            if (searchCpf) params.append('cpf', searchCpf);
+            if (searchNomeCliente) params.append('nome', searchNomeCliente);
+            if (searchDataNascimento) params.append('data_nascimento', searchDataNascimento);
+            if (searchSexo) params.append('sexo', searchSexo);
+            if (searchEstadoCliente) params.append('estado', searchEstadoCliente);
+            if (searchCidadeCliente) params.append('cidade_id', searchCidadeCliente);
+
+            params.append('page', page);
+
+            const data = await fetchAPI(`${API_BASE_URL}/clientes?${params.toString()}`);
+            if (data) {
+                renderClientesTable(data.data);
+                renderPagination(data.links, data.current_page, data.last_page, loadClientes, clientesPagination);
+            }
+        }
+
+        function renderClientesTable(clientes) {
+            clientesTableBody.innerHTML = '';
+            if (clientes.length === 0) {
+                clientesTableBody.innerHTML = '<tr><td colspan="7" class="text-center">Nenhum cliente encontrado.</td></tr>';
+                return;
+            }
+            clientes.forEach(cliente => {
+                const row = clientesTableBody.insertRow();
+                row.innerHTML = `
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editCliente(${cliente.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteCliente(${cliente.id})">Excluir</button>
+                    </td>
+                    <td>${cliente.nome}</td>
+                    <td>${formatCpf(cliente.cpf)}</td>
+                    <td>${formatDate(cliente.data_nascimento)}</td>
+                    <td>${cliente.cidade ? cliente.cidade.estado : 'N/A'}</td>
+                    <td>${cliente.cidade ? cliente.cidade.nome : 'N/A'}</td>
+                    <td>${cliente.sexo}</td>
+                `;
+            });
+        }
+
+        clienteForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const clienteId = document.getElementById('clienteId').value;
+            const cpf = document.getElementById('cpf').value;
+            const nomeCliente = document.getElementById('nomeCliente').value;
+            const dataNascimento = document.getElementById('dataNascimento').value;
+            const sexo = document.querySelector('input[name="sexo"]:checked').value;
+            const endereco = document.getElementById('endereco').value;
+            const cidadeCliente = document.getElementById('cidadeCliente').value;
+
+            const clienteData = {
+                cpf: cpf,
+                nome: nomeCliente,
+                data_nascimento: dataNascimento,
+                sexo: sexo,
+                endereco: endereco,
+                cidade_id: cidadeCliente
+            };
+
+            let response;
+            if (clienteId) {
+                response = await fetchAPI(`${API_BASE_URL}/clientes/${clienteId}`, 'PUT', clienteData);
+            } else {
+                response = await fetchAPI(`${API_BASE_URL}/clientes`, 'POST', clienteData);
+            }
+
+            if (response) {
+                alert('Cliente salvo com sucesso!');
+                clienteForm.reset();
+                document.getElementById('clienteId').value = '';
+                loadClientes(); // Recarregar a lista de clientes
+            }
+        });
+
+        limparClienteFormBtn.addEventListener('click', () => {
+            clienteForm.reset();
+            document.getElementById('clienteId').value = '';
+        });
+
+        consultaClienteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            loadClientes();
+        });
+
+        limparConsultaClienteFormBtn.addEventListener('click', () => {
+            consultaClienteForm.reset();
+            document.getElementById('searchSexoTodos').checked = true;
+            populateEstadoSelect(document.getElementById('searchEstadoCliente'), true);
+            populateCidadeSelect(document.getElementById('searchCidadeCliente'), true);
+            loadClientes();
+        });
+
+        async function editCliente(id) {
+            const cliente = await fetchAPI(`${API_BASE_URL}/clientes/${id}`);
+            if (cliente) {
+                document.getElementById('clienteId').value = cliente.id;
+                document.getElementById('cpf').value = cliente.cpf;
+                document.getElementById('nomeCliente').value = cliente.nome;
+                document.getElementById('dataNascimento').value = cliente.data_nascimento;
+                document.getElementById(cliente.sexo === 'M' ? 'sexoMasculino' : 'sexoFeminino').checked = true;
+                document.getElementById('endereco').value = cliente.endereco;
+
+                // Popula os selects e define o valor correto
+                await populateCidadeSelect(document.getElementById('cidadeCliente'));
+                document.getElementById('cidadeCliente').value = cliente.cidade_id;
+                await populateEstadoSelect(document.getElementById('estadoCliente'));
+                document.getElementById('estadoCliente').value = cliente.cidade ? cliente.cidade.estado : '';
+            }
+        }
+
+        async function deleteCliente(id) {
+            if (confirm('Tem certeza que deseja excluir este cliente?')) {
+                const response = await fetchAPI(`${API_BASE_URL}/clientes/${id}`, 'DELETE');
+                if (response === null) { // 204 No Content
+                    alert('Cliente excluído com sucesso!');
+                    loadClientes();
+                }
+            }
+        }
+
+        // --- Gerenciamento de Cidades ---
+
+        const cidadeForm = document.getElementById('cidadeForm');
+        const limparCidadeFormBtn = document.getElementById('limparCidadeForm');
+        const cidadesTableBody = document.getElementById('cidadesTableBody');
+        const cidadesPagination = document.getElementById('cidadesPagination');
+
+        async function loadCidades(page = 1) {
+            const data = await fetchAPI(`${API_BASE_URL}/cidades?page=${page}`);
+            if (data) {
+                renderCidadesTable(data.data);
+                renderPagination(data.links, data.current_page, data.last_page, loadCidades, cidadesPagination);
+            }
+        }
+
+        function renderCidadesTable(cidades) {
+            cidadesTableBody.innerHTML = '';
+            if (cidades.length === 0) {
+                cidadesTableBody.innerHTML = '<tr><td colspan="3" class="text-center">Nenhuma cidade encontrada.</td></tr>';
+                return;
+            }
+            cidades.forEach(cidade => {
+                const row = cidadesTableBody.insertRow();
+                row.innerHTML = `
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editCidade(${cidade.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteCidade(${cidade.id})">Excluir</button>
+                    </td>
+                    <td>${cidade.nome}</td>
+                    <td>${cidade.estado}</td>
+                `;
+            });
+        }
+
+        cidadeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const cidadeId = document.getElementById('cidadeId').value;
+            const nomeCidade = document.getElementById('nomeCidade').value;
+            const estadoCidade = document.getElementById('estadoCidade').value;
+
+            const cidadeData = {
+                nome: nomeCidade,
+                estado: estadoCidade
+            };
+
+            let response;
+            if (cidadeId) {
+                response = await fetchAPI(`${API_BASE_URL}/cidades/${cidadeId}`, 'PUT', cidadeData);
+            } else {
+                response = await fetchAPI(`${API_BASE_URL}/cidades`, 'POST', cidadeData);
+            }
+
+            if (response) {
+                alert('Cidade salva com sucesso!');
+                cidadeForm.reset();
+                document.getElementById('cidadeId').value = '';
+                loadCidades();
+                // Atualizar selects de cidades e estados em outras abas
+                populateCidadeSelect(document.getElementById('cidadeCliente'));
+                populateEstadoSelect(document.getElementById('estadoCliente'));
+                populateCidadeSelect(document.getElementById('cidadeRepresentante'));
+                populateCidadeSelect(document.getElementById('searchCidadeCliente'), true);
+                populateEstadoSelect(document.getElementById('searchEstadoCliente'), true);
+                populateCidadeSelect(document.getElementById('searchCidadeRepresentante'), true);
+                populateCidadeSelect(document.getElementById('queryCidadeSelect'));
+                populateClienteSelect(document.getElementById('queryClienteSelect'));
+            }
+        });
+
+        limparCidadeFormBtn.addEventListener('click', () => {
+            cidadeForm.reset();
+            document.getElementById('cidadeId').value = '';
+        });
+
+        async function editCidade(id) {
+            const cidade = await fetchAPI(`${API_BASE_URL}/cidades/${id}`);
+            if (cidade) {
+                document.getElementById('cidadeId').value = cidade.id;
+                document.getElementById('nomeCidade').value = cidade.nome;
+                document.getElementById('estadoCidade').value = cidade.estado;
+            }
+        }
+
+        async function deleteCidade(id) {
+            if (confirm('Tem certeza que deseja excluir esta cidade? Esta ação pode afetar clientes e representantes associados.')) {
+                const response = await fetchAPI(`${API_BASE_URL}/cidades/${id}`, 'DELETE');
+                if (response === null) {
+                    alert('Cidade excluída com sucesso!');
+                    loadCidades();
+                    populateCidadeSelect(document.getElementById('cidadeCliente'));
+                    populateEstadoSelect(document.getElementById('estadoCliente'));
+                    populateCidadeSelect(document.getElementById('cidadeRepresentante'));
+                    populateCidadeSelect(document.getElementById('searchCidadeCliente'), true);
+                    populateEstadoSelect(document.getElementById('searchEstadoCliente'), true);
+                    populateCidadeSelect(document.getElementById('searchCidadeRepresentante'), true);
+                    populateCidadeSelect(document.getElementById('queryCidadeSelect'));
+                    populateClienteSelect(document.getElementById('queryClienteSelect'));
+                }
+            }
+        }
+
+        // --- Gerenciamento de Representantes ---
+
+        const representanteForm = document.getElementById('representanteForm');
+        const limparRepresentanteFormBtn = document.getElementById('limparRepresentanteForm');
+        const consultaRepresentanteForm = document.getElementById('consultaRepresentanteForm');
+        const limparConsultaRepresentanteFormBtn = document.getElementById('limparConsultaRepresentanteForm');
+        const representantesTableBody = document.getElementById('representantesTableBody');
+        const representantesPagination = document.getElementById('representantesPagination');
+
+        async function loadRepresentantes(page = 1) {
+            const params = new URLSearchParams();
+            const searchCidadeRepresentante = document.getElementById('searchCidadeRepresentante').value;
+            const searchNomeRepresentante = document.getElementById('searchNomeRepresentante').value;
+
+            if (searchCidadeRepresentante) params.append('cidade_id', searchCidadeRepresentante);
+            if (searchNomeRepresentante) params.append('nome', searchNomeRepresentante);
+
+            params.append('page', page);
+
+            const data = await fetchAPI(`${API_BASE_URL}/representantes?${params.toString()}`);
+            if (data) {
+                renderRepresentantesTable(data.data);
+                renderPagination(data.links, data.current_page, data.last_page, loadRepresentantes, representantesPagination);
+            }
+        }
+
+        function renderRepresentantesTable(representantes) {
+            representantesTableBody.innerHTML = '';
+            if (representantes.length === 0) {
+                representantesTableBody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhum representante encontrado.</td></tr>';
+                return;
+            }
+            representantes.forEach(representante => {
+                const row = representantesTableBody.insertRow();
+                row.innerHTML = `
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editRepresentante(${representante.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteRepresentante(${representante.id})">Excluir</button>
+                    </td>
+                    <td>${representante.nome}</td>
+                    <td>${representante.email}</td>
+                    <td>${representante.telefone || 'N/A'}</td>
+                    <td>${representante.cidade ? representante.cidade.nome : 'N/A'} (${representante.cidade ? representante.cidade.estado : 'N/A'})</td>
+                `;
+            });
+        }
+
+        representanteForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const representanteId = document.getElementById('representanteId').value;
+            const nomeRepresentante = document.getElementById('nomeRepresentante').value;
+            const emailRepresentante = document.getElementById('emailRepresentante').value;
+            const telefoneRepresentante = document.getElementById('telefoneRepresentante').value;
+            const cidadeRepresentante = document.getElementById('cidadeRepresentante').value;
+
+            const representanteData = {
+                nome: nomeRepresentante,
+                email: emailRepresentante,
+                telefone: telefoneRepresentante,
+                cidade_id: cidadeRepresentante
+            };
+
+            let response;
+            if (representanteId) {
+                response = await fetchAPI(`${API_BASE_URL}/representantes/${representanteId}`, 'PUT', representanteData);
+            } else {
+                response = await fetchAPI(`${API_BASE_URL}/representantes`, 'POST', representanteData);
+            }
+
+            if (response) {
+                alert('Representante salvo com sucesso!');
+                representanteForm.reset();
+                document.getElementById('representanteId').value = '';
+                loadRepresentantes();
+            }
+        });
+
+        limparRepresentanteFormBtn.addEventListener('click', () => {
+            representanteForm.reset();
+            document.getElementById('representanteId').value = '';
+        });
+
+        consultaRepresentanteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            loadRepresentantes();
+        });
+
+        limparConsultaRepresentanteFormBtn.addEventListener('click', () => {
+            consultaRepresentanteForm.reset();
+            populateCidadeSelect(document.getElementById('searchCidadeRepresentante'), true);
+            loadRepresentantes();
+        });
+
+        async function editRepresentante(id) {
+            const representante = await fetchAPI(`${API_BASE_URL}/representantes/${id}`);
+            if (representante) {
+                document.getElementById('representanteId').value = representante.id;
+                document.getElementById('nomeRepresentante').value = representante.nome;
+                document.getElementById('emailRepresentante').value = representante.email;
+                document.getElementById('telefoneRepresentante').value = representante.telefone;
+                await populateCidadeSelect(document.getElementById('cidadeRepresentante'));
+                document.getElementById('cidadeRepresentante').value = representante.cidade_id;
+            }
+        }
+
+        async function deleteRepresentante(id) {
+            if (confirm('Tem certeza que deseja excluir este representante?')) {
+                const response = await fetchAPI(`${API_BASE_URL}/representantes/${id}`, 'DELETE');
+                if (response === null) {
+                    alert('Representante excluído com sucesso!');
+                    loadRepresentantes();
+                }
+            }
+        }
+
+        // --- Gerenciamento de Consultas SQL ---
+
+        const queryClienteSelect = document.getElementById('queryClienteSelect');
+        const btnQueryRepresentantesByCliente = document.getElementById('btnQueryRepresentantesByCliente');
+        const queryRepresentantesByClienteTableBody = document.getElementById('queryRepresentantesByClienteTableBody');
+
+        const queryCidadeSelect = document.getElementById('queryCidadeSelect');
+        const btnQueryRepresentantesByCidade = document.getElementById('btnQueryRepresentantesByCidade');
+        const queryRepresentantesByCidadeTableBody = document.getElementById('queryRepresentantesByCidadeTableBody');
+
+        async function populateClienteSelect(selectElement) {
+            const clientes = await fetchAPI(`${API_BASE_URL}/clientes?per_page=9999`); // Pega todos os clientes
+            selectElement.innerHTML = '';
+            if (clientes && clientes.data) {
+                clientes.data.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente.id;
+                    option.textContent = `${cliente.nome} (${formatCpf(cliente.cpf)})`;
+                    selectElement.appendChild(option);
+                });
+            }
+        }
+
+        btnQueryRepresentantesByCliente.addEventListener('click', async () => {
+            const clienteId = queryClienteSelect.value;
+            if (!clienteId) {
+                alert('Selecione um cliente.');
+                return;
+            }
+            const representantes = await fetchAPI(`${API_BASE_URL}/clientes/${clienteId}/representantes`);
+            renderQueryRepresentantesTable(representantes, queryRepresentantesByClienteTableBody);
+        });
+
+        btnQueryRepresentantesByCidade.addEventListener('click', async () => {
+            const cidadeId = queryCidadeSelect.value;
+            if (!cidadeId) {
+                alert('Selecione uma cidade.');
+                return;
+            }
+            const representantes = await fetchAPI(`${API_BASE_URL}/cidades/${cidadeId}/representantes`);
+            renderQueryRepresentantesTable(representantes, queryRepresentantesByCidadeTableBody);
+        });
+
+        function renderQueryRepresentantesTable(representantes, tableBodyElement) {
+            tableBodyElement.innerHTML = '';
+            if (!representantes || representantes.length === 0) {
+                tableBodyElement.innerHTML = '<tr><td colspan="5" class="text-center">Nenhum representante encontrado.</td></tr>';
+                return;
+            }
+            representantes.forEach(representante => {
+                const row = tableBodyElement.insertRow();
+                row.innerHTML = `
+                    <td>${representante.nome}</td>
+                    <td>${representante.email}</td>
+                    <td>${representante.telefone || 'N/A'}</td>
+                    <td>${representante.cidade ? representante.cidade.nome : 'N/A'}</td>
+                    <td>${representante.cidade ? representante.cidade.estado : 'N/A'}</td>
+                `;
+            });
+        }
+
+        // --- Funções de Paginação Genéricas ---
+        function renderPagination(links, currentPage, lastPage, loadFunction, paginationElement) {
+            paginationElement.innerHTML = '';
+
+            // Previous button
+            if (links.prev) {
+                const li = document.createElement('li');
+                li.className = 'page-item';
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = '« Anterior';
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadFunction(currentPage - 1);
+                });
+                li.appendChild(a);
+                paginationElement.appendChild(li);
+            }
+
+            // Page numbers
+            // Show a limited range of pages around the current page
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(lastPage, currentPage + 2);
+
+            if (currentPage <= 3) { // If current page is near the beginning
+                endPage = Math.min(lastPage, 5);
+            } else if (currentPage >= lastPage - 2) { // If current page is near the end
+                startPage = Math.max(1, lastPage - 4);
+            }
+
+
+            if (startPage > 1) {
+                const li = document.createElement('li');
+                li.className = 'page-item';
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = '1';
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadFunction(1);
+                });
+                li.appendChild(a);
+                paginationElement.appendChild(li);
+                if (startPage > 2) { // Add ellipsis if not just page 1
+                    const ellipsis = document.createElement('li');
+                    ellipsis.className = 'page-item disabled';
+                    ellipsis.innerHTML = '<span class="page-link">...</span>';
+                    paginationElement.appendChild(ellipsis);
+                }
+            }
+
+
+            for (let i = startPage; i <= endPage; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = i;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadFunction(i);
+                });
+                li.appendChild(a);
+                paginationElement.appendChild(li);
+            }
+
+            if (endPage < lastPage) {
+                if (endPage < lastPage - 1) { // Add ellipsis if not just page lastPage
+                    const ellipsis = document.createElement('li');
+                    ellipsis.className = 'page-item disabled';
+                    ellipsis.innerHTML = '<span class="page-link">...</span>';
+                    paginationElement.appendChild(ellipsis);
+                }
+                const li = document.createElement('li');
+                li.className = 'page-item';
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = lastPage;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadFunction(lastPage);
+                });
+                li.appendChild(a);
+                paginationElement.appendChild(li);
+            }
+
+
+            // Next button
+            if (links.next) {
+                const li = document.createElement('li');
+                li.className = 'page-item';
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = 'Próximo »';
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadFunction(currentPage + 1);
+                });
+                li.appendChild(a);
+                paginationElement.appendChild(li);
+            }
+        }
+
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Preencher selects de Cidades e Estados para o formulário de Clientes (cadastro e consulta)
+            await populateCidadeSelect(document.getElementById('cidadeCliente'));
+            await populateEstadoSelect(document.getElementById('estadoCliente')); // Não é usado no form de cadastro diretamente
+            await populateCidadeSelect(document.getElementById('searchCidadeCliente'), true);
+            await populateEstadoSelect(document.getElementById('searchEstadoCliente'), true);
+
+            // Preencher selects de Cidades para o formulário de Representantes (cadastro e consulta)
+            await populateCidadeSelect(document.getElementById('cidadeRepresentante'));
+            await populateCidadeSelect(document.getElementById('searchCidadeRepresentante'), true);
+
+            // Preencher selects para as consultas SQL
+            await populateClienteSelect(document.getElementById('queryClienteSelect'));
+            await populateCidadeSelect(document.getElementById('queryCidadeSelect'));
+
+
+            // Carregar dados iniciais nas tabelas
+            loadClientes();
+            loadCidades();
+            loadRepresentantes();
+
+            // Adicionar listener para as abas para recarregar dados quando a aba for mostrada
+            const tabTriggers = document.querySelectorAll('#myTab button');
+            tabTriggers.forEach(trigger => {
+                trigger.addEventListener('shown.bs.tab', event => {
+                    const targetPaneId = event.target.dataset.bsTarget;
+                    if (targetPaneId === '#cliente-pane') {
+                        loadClientes();
+                    } else if (targetPaneId === '#cidade-pane') {
+                        loadCidades();
+                    } else if (targetPaneId === '#representante-pane') {
+                        loadRepresentantes();
+                    } else if (targetPaneId === '#queries-pane') {
+                        populateClienteSelect(document.getElementById('queryClienteSelect'));
+                        populateCidadeSelect(document.getElementById('queryCidadeSelect'));
+                        queryRepresentantesByClienteTableBody.innerHTML = '';
+                        queryRepresentantesByCidadeTableBody.innerHTML = '';
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
